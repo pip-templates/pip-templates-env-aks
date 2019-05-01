@@ -1,0 +1,211 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "azureResourceGroup": {
+        "type": "string",
+        "metadata": {
+            "description": "Target Resource Group"
+        }
+    },
+    "containerName": {
+        "type": "string",
+        "metadata": {
+            "description": "Sets name of container service"
+        }
+    },
+    "dnsNamePrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Sets the Domain name prefix for the cluster.  The concatenation of the domain name and the regionalized DNS zone make up the fully qualified domain name associated with the public IP address."
+      }
+    },
+    "vnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name used for the primary vnet the cluster sets within"
+      }
+    },
+    "vnetAddressCidr": {
+      "type": "string",
+      "metadata": {
+        "description": "Primary vnet address range"
+      }
+    },
+    "subnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet name for clusters"
+      }
+    },
+    "subnetAddressCidr": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet address range for clusters"
+      }
+    },
+    "serviceCidr": {
+      "type": "string",
+      "metadata": {
+        "description": "Kubernetes service address range"
+      }
+    },
+    "dnsServiceIp": {
+      "type": "string",
+      "metadata": {
+        "description": "Kubernetes DNS service IP address"
+      }
+    },
+    "dockerBridgeCidr": {
+      "type": "string",
+      "metadata": {
+        "description": "Docker Bridge Address"
+      }
+    },
+    "agentCount": {
+      "type": "int",
+      "defaultValue": 3,
+      "metadata": {
+        "description": "The number of agents for the cluster.  This value can be from 1 to 100 (note, for Kubernetes clusters you will also get 1 or 2 public agents in addition to these seleted masters)"
+      },
+      "minValue":1,
+      "maxValue":100
+    },
+    "agentVMSize": {
+      "type": "string",
+      "defaultValue": "Standard_D2_v2",
+      "metadata": {
+        "description": "The size of the Virtual Machine."
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "User name for the Linux Virtual Machines."
+      }
+    },
+    "orchestratorType": {
+      "type": "string",
+      "defaultValue": "Kubernetes",
+      "allowedValues": [
+        "Kubernetes",
+        "DCOS",
+        "Swarm"
+      ],
+      "metadata": {
+        "description": "The type of orchestrator used to manage the applications on the cluster."
+      }
+    },
+    "sshRSAPublicKey": {
+      "type": "string",
+      "metadata": {
+        "description": "Configure all linux machines with the SSH RSA public key string.  Your key should include three parts, for example 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'"
+      }
+    },
+    "servicePrincipalClientId": {
+      "metadata": {
+        "description": "Client ID (used by cloudprovider)"
+      },
+      "type": "securestring"
+    },
+    "servicePrincipalClientSecret": {
+      "metadata": {
+        "description": "The Service Principal Client Secret."
+      },
+      "type": "securestring"
+    }
+  },
+  "variables": {
+    "agentsEndpointDNSNamePrefix":"[concat(parameters('dnsNamePrefix'),'agents')]",
+    "mastersEndpointDNSNamePrefix":"[concat(parameters('dnsNamePrefix'),'mgmt')]",
+    "vnetID": "[resourceId(parameters('azureResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
+    "vnetPath": "[concat('Microsoft.Network/virtualNetworks/',parameters('vnetName'))]",
+    "subnetPath": "[concat(variables('vnetID'),'/subnets/', parameters('subnetName'))]",
+    "useServicePrincipalDictionary": {
+      "DCOS": 0,
+      "Swarm": 0,
+      "Kubernetes": 1
+    },
+    "useServicePrincipal": "[variables('useServicePrincipalDictionary')[parameters('orchestratorType')]]",
+    "servicePrincipalFields": [
+      null,
+      {
+        "ClientId": "[parameters('servicePrincipalClientId')]",
+        "Secret": "[parameters('servicePrincipalClientSecret')]"
+      }
+    ]
+  },
+  "resources": [
+    {
+      "name": "[parameters('vnetName')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2018-04-01",
+      "location": "[resourceGroup().location]",
+      "properties": {
+          "addressSpace": {
+              "addressPrefixes": [
+                  "[parameters('vnetAddressCidr')]"
+              ]
+          },
+          "subnets": [
+              {
+                  "name": "[parameters('subnetName')]",
+                  "properties": {
+                      "addressPrefix": "[parameters('subnetAddressCidr')]"
+                  }
+              }
+          ]
+      }
+    },
+    {
+      "dependsOn": ["[variables('vnetPath')]"],
+      "name": "[parameters('containerName')]",
+      "type": "Microsoft.ContainerService/managedClusters",
+      "apiVersion": "2018-03-31",
+      "location": "[resourceGroup().location]",
+      "tags": {},
+      "properties": {
+        "kubernetesVersion": "<%=k8s_version%>",
+        "dnsPrefix": "[variables('mastersEndpointDNSNamePrefix')]",
+        "addonProfiles": {
+          "httpApplicationRouting": {
+              "enabled": true
+          }
+        },
+        "agentPoolProfiles": [
+          {
+            "name": "agentpools",
+            "count": "[parameters('agentCount')]",
+            "vmSize": "[parameters('agentVMSize')]",
+            "dnsPrefix": "[variables('agentsEndpointDNSNamePrefix')]",
+            "storageProfile": "ManagedDisks",
+            "vnetSubnetID": "[variables('subnetPath')]"
+          }
+        ],
+        "linuxProfile": {
+          "adminUsername": "[parameters('adminUsername')]",
+          "ssh": {
+            "publicKeys": [
+              {
+                "keyData": "[parameters('sshRSAPublicKey')]"
+              }
+            ]
+          }
+        },
+        "servicePrincipalProfile": "[variables('servicePrincipalFields')[variables('useServicePrincipal')]]",
+        "networkProfile": {
+          "networkPlugin": "azure",
+          "serviceCidr": "[parameters('serviceCidr')]",
+          "dnsServiceIP": "[parameters('dnsServiceIp')]",
+          "dockerBridgeCidr": "[parameters('dockerBridgeCidr')]"
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "controlPlaneFQDN": {
+      "type": "string",
+      "value": "[reference(concat('Microsoft.ContainerService/managedClusters/', parameters('containerName'))).fqdn]"
+  }
+  }
+}

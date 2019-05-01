@@ -1,0 +1,57 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "azureResourceGroup": {
+            "value": "<%=az_resource_group%>"
+        },
+        "containerName": {
+            "value": "<%=k8s_name%>"
+        },
+        "dnsNamePrefix": {
+            "value": "<%=k8s_dns_name_prefix%>"
+        },
+        "agentVMSize": {
+            "value": "<%=k8s_agent_vm_size%>"
+        },
+        "agentCount": {
+            "value": <%=k8s_agent_count%>
+        },
+        "adminUsername": {
+            "value": "<%=k8s_admin_user%>"
+        },
+        "sshRSAPublicKey": {
+            "value": "<%=k8s_ssh_rsa_public_key%>"
+        },
+        "servicePrincipalClientId": {
+            "value": "<%=az_sp_app_id%>"
+        },
+        "servicePrincipalClientSecret": {
+            "value": "<%=az_sp_password%>"
+        },
+        "vnetName": {
+            "value": "<%=k8s_vnet_name%>"
+        },
+        "vnetAddressCidr": {
+            "value": "<%=k8s_vnet_address_cidr%>"
+        },
+        "subnetName": {
+            "value": "<%=k8s_subnet_name%>"
+        },
+        "subnetAddressCidr": {
+            "value": "<%=k8s_subnet_address_cidr%>"
+        },
+        "serviceCidr": {
+            "value": "<%=k8s_service_cidr%>"
+        },
+        "dnsServiceIp": {
+            "value": "<%=k8s_dns_service_ip%>"
+        },
+        "dockerBridgeCidr": {
+            "value": "<%=k8s_docker_bridge_cidr%>"
+        },
+        "orchestratorType": {
+            "value": "Kubernetes"
+        }
+    }
+}

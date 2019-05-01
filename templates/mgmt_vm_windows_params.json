@@ -1,0 +1,96 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+      "location": {
+          "value": "<%=az_region%>"
+      },
+      "networkInterfaceName": {
+          "value": "<%=mgmt_win_vm_nic_name%>"
+      },
+      "networkSecurityGroupName": {
+          "value": "<%=mgmt_win_vm_nsg_name%>"
+      },
+      "networkSecurityGroupRules": {
+          "value": [
+              {
+                  "name": "RDP",
+                  "properties": {
+                      "priority": 300,
+                      "protocol": "TCP",
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "sourceAddressPrefix": "*",
+                      "sourcePortRange": "*",
+                      "destinationAddressPrefix": "*",
+                      "destinationPortRange": "3389"
+                  }
+              },
+              {
+                  "name": "SSH",
+                  "properties": {
+                      "priority": 320,
+                      "protocol": "TCP",
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "sourceAddressPrefix": "*",
+                      "sourcePortRange": "*",
+                      "destinationAddressPrefix": "*",
+                      "destinationPortRange": "22"
+                  }
+              }
+          ]
+      },
+      "virtualNetworkName": {
+          "value": "<%=mgmt_win_vm_vnet_name%>"
+      },
+      "addressPrefixes": {
+          "value": [
+              "10.0.0.0/24"
+          ]
+      },
+      "subnetName": {
+        "value": "<%=mgmt_win_vm_subnet_name%>"
+      },
+      "subnets": {
+          "value": [
+              {
+                  "name": "<%=mgmt_win_vm_subnet_name%>",
+                  "properties": {
+                      "addressPrefix": "10.0.0.0/24"
+                  }
+              }
+          ]
+      },
+      "publicIpAddressName": {
+          "value": "<%=mgmt_win_vm_pub_ip_name%>"
+      },
+      "publicIpAddressType": {
+          "value": "Static"
+      },
+      "publicIpAddressSku": {
+          "value": "Standard"
+      },
+      "virtualMachineName": {
+          "value": "<%=mgmt_win_vm_name%>"
+      },
+      "virtualMachineRG": {
+          "value": "<%=az_resource_group%>"
+      },
+      "diskName": {
+          "value": "<%=mgmt_win_vm_disk_name%>"
+      },
+      "osDiskType": {
+          "value": "Standard_LRS"
+      },
+      "virtualMachineSize": {
+          "value": "<%=mgmt_win_vm_vm_size%>"
+      },
+      "adminUsername": {
+          "value": "<%=mgmt_win_vm_user%>"
+      },
+      "adminPassword": {
+          "value": "<%=mgmt_win_vm_password%>"
+      }
+  }
+}

@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "registryName": {
+            "value": "<%=container_registry_name%>"
+        },
+        "registryLocation": {
+            "value": "<%=az_region%>"
+        },
+        "registrySku": {
+            "value": "<%=container_registry_sku%>"
+        },
+        "adminUserEnabled": {
+            "value": <%=container_registry_admin_enabled%>
+        }
+    }
+}

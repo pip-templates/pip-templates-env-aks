@@ -1,0 +1,26 @@
+---
+- hosts: all
+  vars:
+    dest: instances.csv
+  tasks:
+    - name: Get CPU usage
+      shell: "top -b -n 1"
+      register: top
+
+    - name: Set CPU usage facts
+      set_fact:
+        user_cpu: "{{top.stdout_lines[2].split()[1]}}"
+        system_cpu: "{{top.stdout_lines[2].split()[3]}}"
+
+    - name: Set output csv headers
+      copy:
+        content: 'hostname,os_name,os_version,os_release,user_cpu_usage,system_cpu_usage,mem_total,mem_free'
+        dest: "{{ dest }}"
+      run_once: yes
+      delegate_to: 127.0.0.1
+
+    - name: Write host info to output file
+      lineinfile:
+        dest: "{{ dest }}"
+        line: '{{ inventory_hostname }},{{ ansible_distribution }},{{ ansible_distribution_version }},{{ ansible_distribution_release }},{{user_cpu}},{{system_cpu}},{{ ansible_memtotal_mb }},{{ ansible_memfree_mb }}'
+      delegate_to: 127.0.0.1

@@ -1,0 +1,14 @@
+- hosts: all
+  become: yes
+  tasks:
+   # Elasticsearch prerequsits
+   - name: Increase vm.max_map_count for elasticsearch
+     become: yes
+     shell: sysctl -w vm.max_map_count=262144
+
+   - name: Creates elasticsearch data directory
+     file:
+       path: /var/data/elasticsearch
+       state: directory
+       owner: 1000
+       group: 1000

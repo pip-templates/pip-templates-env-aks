@@ -1,0 +1,83 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "<%=az_region%>"
+        },
+        "networkInterfaceName": {
+            "value": "<%=az_vm_resources_prefix%><%=az_vm_number%>-nic"
+        },
+        "networkSecurityGroupName": {
+            "value": "<%=az_vm_resources_prefix%><%=az_vm_number%>-nsg"
+        },
+        "networkSecurityGroupRules": {
+            "value": [
+                {
+                    "name": "SSH",
+                    "properties": {
+                        "priority": 300,
+                        "protocol": "TCP",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "22"
+                    }
+                }
+            ]
+        },
+        "subnetName": {
+            "value": "default"
+        },
+        "virtualNetworkName": {
+            "value": "<%=az_vm_vnet%>"
+        },
+        "addressPrefixes": {
+            "value": [
+                "10.0.0.0/24"
+            ]
+        },
+        "subnets": {
+            "value": [
+                {
+                    "name": "default",
+                    "properties": {
+                        "addressPrefix": "10.0.0.0/24"
+                    }
+                }
+            ]
+        },
+        "publicIpAddressName": {
+            "value": "<%=az_vm_resources_prefix%><%=az_vm_number%>-ip"
+        },
+        "publicIpAddressType": {
+            "value": "Dynamic"
+        },
+        "publicIpAddressSku": {
+            "value": "Basic"
+        },
+        "virtualMachineName": {
+            "value": "<%=az_vm_resources_prefix%><%=az_vm_number%>"
+        },
+        "virtualMachineRG": {
+            "value": "<%=az_resource_group%>"
+        },
+        "diskName": {
+            "value": "<%=az_vm_resources_prefix%><%=az_vm_number%>-disk"
+        },
+        "osDiskType": {
+            "value": "Standard_LRS"
+        },
+        "virtualMachineSize": {
+            "value": "<%=az_vm_size%>"
+        },
+        "adminUsername": {
+            "value": "<%=onprem_instance_username%>"
+        },
+        "adminPublicKey": {
+            "value": "<%=az_vm_public_key%>"
+        }
+    }
+}
