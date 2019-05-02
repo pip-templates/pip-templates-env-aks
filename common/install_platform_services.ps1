@@ -40,12 +40,3 @@ kubectl apply -f "$($path)/../templates/k8s_components/logging.yml"
 
 # Install metrics
 kubectl apply -f "$($path)/../templates/k8s_components/metrics.yml"
-
-# Install couchbase sync gateway
-if ($config.env_type -eq "local") { # on cloud couchbase installation already have sync gw
-    Build-EnvTemplate -InputPath "$($path)/../templates/k8s_components/cb-sgw-config.$($config.env_type).json" -OutputPath "$($path)/../temp/sgw-config.json" -Params1 $config -Params2 $resources
-    kubectl create secret generic cb-sgw-config --from-file "$($path)/../temp/sgw-config.json" --namespace piptemplates
-
-    Build-EnvTemplate -InputPath "$($path)/../templates/k8s_components/cb-sgw.yml" -OutputPath "$($path)/../temp/cb-sgw.yml" -Params1 $config -Params2 $resources
-    kubectl create -f "$($path)/../temp/cb-sgw.yml"
-}

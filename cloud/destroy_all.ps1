@@ -44,14 +44,3 @@ if ($(az group exists -n $config.az_resource_group)) {
 } else {
     Write-Host "Resource group '$($config.az_resource_group)' not exists. Nothing to delete."
 }
-
-# Delete couchbase rg
-if ($(az group exists -n $config.couchbase_az_resource_group)) {
-    Write-Host "Deleting resource group '$($config.couchbase_az_resource_group)' and all resources in it..."
-    az group delete --name $config.couchbase_az_resource_group --yes | Out-String | ConvertFrom-Json | ConvertObjectToHashtable
-    if ($LastExitCode -eq 0) {
-        Write-Host "Resoruce group '$($config.couchbase_az_resource_group)' deleted."
-    }
-} else {
-    Write-Host "Resource group '$($config.couchbase_az_resource_group)' not exists. Nothing to delete."
-}

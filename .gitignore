@@ -1,11 +1,6 @@
-.DS_Store
-
 /common/*.yml
 /common/k8s_nodes
 /common/*playbook*
-
-/local/.vagrant
-/local/Vagrant
 
 /cloud/*.yml
 /cloud/*.json

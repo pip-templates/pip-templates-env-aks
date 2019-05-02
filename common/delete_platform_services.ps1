@@ -31,11 +31,3 @@ kubectl delete -f "$($path)/../templates/k8s_components/logging.yml"
 
 # Delete metrics
 kubectl delete -f "$($path)/../templates/k8s_components/metrics.yml"
-
-# Delete couchbase sync gateway
-if ($config.env_type -ne "cloud") { # skip for cloud
-    kubectl delete secret cb-sgw-config --namespace piptemplates
-
-    Build-EnvTemplate -InputPath "$($path)/../templates/k8s_components/cb-sgw.yml" -OutputPath "$($path)/../temp/cb-sgw.yml" -Params1 $config -Params2 $resources
-    kubectl delete -f "$($path)/../temp/cb-sgw.yml"
-}
