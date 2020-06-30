@@ -47,13 +47,6 @@ If you have any problem with not installed tools - use `install_prereq_` script 
 | Templates | Folder for storing templates, such as kubernetes yml files, az resource manager json files, ansible playbooks, etc. | 
 | Test | Script for testing created environment using ansible and comparing results to expected values. | 
 
-# Environment types
-There are 3 types of enviroment: 
-
-* Cloud - resources created by azure resource manager, use azure kubernetes services (AKS) for deploying kubernetes cluster, etc.
-* On premises - use existing instances and via ansible install kubernetes cluster using kubeadm. Also created install azure virtual machines script to simulate existing instances.
-* Local - use minikube to install kubernetes cluster. 
-
 ### Cloud environment
 
 Cloud installation specifics:
