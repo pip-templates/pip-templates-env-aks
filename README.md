@@ -40,10 +40,10 @@ If you have any problem with not installed tools - use `install_prereq_` script 
 | Folder | Description |
 |----|----|
 | Cloud | Scripts related to management cloud environment. | 
-| Common | Scrits common for different evnironments. Currently have script for install/delete platform services for cloud or local environments. | 
-| Config | Config files for scripts. Store *example* configs for each environment, recomendation is not change this files with actual values, set actual values in duplicate config files without *example* in name. Also stores *resources* files, created automaticaly. | 
+| Common | Scripts common for different environments. Currently have script for install/delete platform services for cloud or local environments. | 
+| Config | Config files for scripts. Store *example* configs for each environment, recommendation is not change this files with actual values, set actual values in duplicate config files without *example* in name. Also stores *resources* files, created automatically. | 
 | Lib | Scripts with support functions like working with configs, templates etc. | 
-| Temp | Folder for storing automaticaly created temporary files. | 
+| Temp | Folder for storing automatically created temporary files. | 
 | Templates | Folder for storing templates, such as kubernetes yml files, az resource manager json files, ansible playbooks, etc. | 
 | Test | Script for testing created environment using ansible and comparing results to expected values. | 
 
