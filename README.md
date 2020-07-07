@@ -7,7 +7,7 @@ Scriptable environments introduce “infrastructure as a code” into devops pra
 * Provide developers with environment to run and test their components integrated into the final system and expand their area of responsibilities
 
 # Syntax
-All sripts have one required paramenter - *$ConfigPath*. This is the path to config, path can be absolute or relative. 
+All sripts have one required parameter - *$ConfigPath*. This is the path to config, path can be absolute or relative. 
 
 **Examples of installing aks**
 Relative path example:
