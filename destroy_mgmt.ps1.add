@@ -1,0 +1,6 @@
+# Destroy mgmt station
+. "$($rootPath)/src/destroy_mgmt_vm.ps1" $ConfigPath
+# Check for error
+if ($LastExitCode -ne 0) {
+    Write-Error "Can't destroy management station. Watch logs above."
+}

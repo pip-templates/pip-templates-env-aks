@@ -1,0 +1,5 @@
+# Install vagrant
+choco install --yes vagrant
+
+# Install Azure Cli
+choco install --yes azure-cli

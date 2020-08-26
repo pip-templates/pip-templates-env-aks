@@ -1,0 +1,9 @@
+# Destroy k8s cluster
+switch ($config.env_type) {
+    "cloud" { 
+        . "$($rootPath)/src/destroy_all.ps1" $ConfigPath
+     }
+    Default {
+        Write-Host "Platform type not specified in config file. Please add 'env_type' to config."
+    }
+}

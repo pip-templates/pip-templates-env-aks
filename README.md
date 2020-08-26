@@ -1,53 +1,16 @@
 # Overview
-Scriptable environments introduce “infrastructure as a code” into devops practices. They allow to:
 
-* Have controllable and verifiable environment structure
-* Quickly spin up fully-functional environments in minutes
-* Minimize differences between environments
-* Provide developers with environment to run and test their components integrated into the final system and expand their area of responsibilities
+This is a built-in module to environment [pip-templates-env-master](https://github.com/pip-templates/pip-templates-env-master). 
+This module stores scripts for management azure kubernetes environment.
 
-# Syntax
-All sripts have one required parameter - *$ConfigPath*. This is the path to config, path can be absolute or relative. 
+# Usage
 
-**Examples of installing aks**
-Relative path example:
-`
-./cloud/install_k8s.ps1 ./config/cloud_config.json
-`
-Absolute path example:
-`
-~/pip-templates-env-azureaks/cloud/install_k8s.ps1 ~/pip-templates-env-azureaks/config/cloud_config.json
-`
+- Download this repository
+- Copy *src* and *templates* folder to master template
+- Add content of *.ps1.add* files to correspondent files from master template
+- Add content of *config/config.k8s.json.add* to json config file from master template and set the required values
 
-**Example delete script**
-`
-./cloud/destroy_k8s.ps1 ./config/cloud_config.json
-`
-
-Also you can install environment using single script:
-`
-./create_env.ps1 ./config/cloud_config.json
-`
-
-Delete whole environment:
-`
-./delete_env.ps1 ./config/cloud_config.json
-`
-
-If you have any problem with not installed tools - use `install_prereq_` script for you type of operation system.
-
-# Project structure
-| Folder | Description |
-|----|----|
-| Cloud | Scripts related to management cloud environment. | 
-| Common | Scripts common for different environments. Currently have script for install/delete platform services for cloud or local environments. | 
-| Config | Config files for scripts. Store *example* configs for each environment, recommendation is not change this files with actual values, set actual values in duplicate config files without *example* in name. Also stores *resources* files, created automatically. | 
-| Lib | Scripts with support functions like working with configs, templates etc. | 
-| Temp | Folder for storing automatically created temporary files. | 
-| Templates | Folder for storing templates, such as kubernetes yml files, az resource manager json files, ansible playbooks, etc. | 
-| Test | Script for testing created environment using ansible and comparing results to expected values. | 
-
-### Cloud environment
+### Azure cloud environment
 
 Cloud installation specifics:
 * If you install kubernetes cluster multiple times with same name, then script can ask you to edit *~/.kube/config* file. Example of warning message:
@@ -68,12 +31,14 @@ You should open this file and delete all information related to cluster name (cl
 5) Select tab Role assignments
 6) Click on Add button and select Add role assignment
 7) Select Role - Network Contributor
-8) On the input for name or email eddress type *Nebula* - this is the name of service principal application, used for creation AKS
+8) On the input for name or email eddress type *Piptemplates* - this is the name of service principal application, used for creation AKS
 9) Click on sudgested application and click Save
 
 * After AKS installation vm used for kubernetes cluster is closed from intertet. If you want to ssh to those instances first you must run `./cloud/open_ports.ps1` to open ssh access via public virtual machine ip, then you can connect to virtual machine and after everything is done - close ssh access `./cloud/close_ports.ps1`
 
-* Cloud env config parameters
+# Config parameters
+
+Config variables description
 
 | Variable | Default value | Description |
 |----|----|---|
@@ -118,9 +83,9 @@ You should open this file and delete all information related to cluster name (cl
 | mgmt_win_vm_pub_ip_name | piptemplates-mgmt-vm-ip | Azure management station public ip name |
 
 # Testing enviroment
-To test created environment after installation you can use script in *test* folder:
+To test created environment after installation you can use *test_instances* script:
 `
-./test/test_instances.ps1 ./config/test_config.json
+./src/test_instances.ps1 ./config/test_config.json
 `
 You have to create test config  before running *test_instances* script.
 * Test config parameters

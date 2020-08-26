@@ -1,0 +1,2 @@
+# Install az cli
+brew install azure-cli
