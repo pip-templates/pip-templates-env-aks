@@ -29,17 +29,5 @@
     "container_registry_deployment_name": "piptemplates-container-registry-deployment",
     "container_registry_name": "piptemplatesregistry",
     "container_registry_sku": "Basic",
-    "container_registry_admin_enabled": true,
-
-    "mgmt_win_vm_deployment_name": "piptemplates-mgmt-win-vm-deployment",
-    "mgmt_win_vm_name": "piptemplates-mgmt-win-vm",
-    "mgmt_win_vm_user": "piptemplatesadmin",
-    "mgmt_win_vm_password": "piptemplatesadmin2019#",
-    "mgmt_win_vm_vm_size": "Standard_DS1_v2",
-    "mgmt_win_vm_vnet_name": "piptemplates-mgmt-vm-vnet",
-    "mgmt_win_vm_subnet_name": "piptemplates-mgmt-vm-subnet",
-    "mgmt_win_vm_nsg_name": "piptemplates-mgmt-vm-nsg",
-    "mgmt_win_vm_nic_name": "piptemplates-mgmt-vm-nic",
-    "mgmt_win_vm_disk_name": "piptemplates-mgmt-vm-disk",
-    "mgmt_win_vm_pub_ip_name": "piptemplates-mgmt-vm-ip"
+    "container_registry_admin_enabled": true
 }

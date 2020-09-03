@@ -70,17 +70,6 @@ Config variables description
 | container_registry_name | piptemplatesregistry | Azure private container registry name. Use this for docker login as username |
 | container_registry_sku | Basic | Azure private container registry SKU |
 | container_registry_admin_enabled | true | Set to *true* to create private azure container registry |
-| mgmt_win_vm_deployment_name | piptemplates-mgmt-win-vm-deployment | Azure management station deployment name |
-| mgmt_win_vm_name | piptemplates-mgmt-win-vm | Azure management station virtual machine name |
-| mgmt_win_vm_user | piptemplatesadmin | Azure management station username. Use this for connect to instance |
-| mgmt_win_vm_password | piptemplatesadmin2019# | Azure management station password. Use this for connect to instance |
-| mgmt_win_vm_vm_size | Standard_DS1_v2 | Azure management station virtual machine size |
-| mgmt_win_vm_vnet_name | piptemplates-mgmt-vm-vnet | Azure management station virtual network name |
-| mgmt_win_vm_subnet_name | piptemplates-mgmt-vm-subnet | Azure management station subnet name |
-| mgmt_win_vm_nsg_name | piptemplates-mgmt-vm-nsg | Azure management station network security group name |
-| mgmt_win_vm_nic_name | piptemplates-mgmt-vm-nic | Azure management station network interface name |
-| mgmt_win_vm_disk_name | piptemplates-mgmt-vm-disk | Azure management station disk name |
-| mgmt_win_vm_pub_ip_name | piptemplates-mgmt-vm-ip | Azure management station public ip name |
 
 # Testing enviroment
 To test created environment after installation you can use *test_instances* script:
