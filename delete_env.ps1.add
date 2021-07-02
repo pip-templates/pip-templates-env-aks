@@ -1,9 +1,9 @@
-# Destroy k8s cluster
-switch ($config.env_type) {
-    "cloud" { 
-        . "$($rootPath)/src/destroy_all.ps1" $ConfigPath
-     }
-    Default {
-        Write-Host "Platform type not specified in config file. Please add 'env_type' to config."
-    }
-}
+###################################################################
+# Delete the k8s cluster
+. "$($rootPath)/kubernetes/delete.ps1" -ConfigPath "$ConfigPath" -ConfigPrefix "k8s" -ResourcePath "$ResourcePath" -ResourcePrefix "k8s"
+###################################################################
+
+###################################################################
+# Delete the container registry (not required for k8s)
+. "$($rootPath)/container-registry/delete.ps1" -ConfigPath "$ConfigPath" -ConfigPrefix "cr" -ResourcePath "$ResourcePath" -ResourcePrefix "cr"
+###################################################################

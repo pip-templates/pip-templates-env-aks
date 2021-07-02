@@ -1,33 +1,42 @@
 {
-    "env_type": "cloud",
-
-    "az_region": "eastus",
-    "az_resource_group": "piptemplates-stage-east-us",
-    "az_subscription": "piptemplates-DI",
-    "az_sp_app_id": "secret",
-    "az_sp_password": "secret",
-
-    "k8s_deployment_group_name": "piptemplates-stage-kubernetes-deployment",
-    "k8s_name": "piptemplates-stage-kubernetes",  
-    "k8s_version": "1.12.7",   
-    "k8s_master_count": 1,
-    "k8s_agent_count": 2,
-    "k8s_dns_name_prefix": "piptemplates-stage-",
-    "k8s_agent_vm_size": "Standard_D2_v2",
-    "k8s_admin_user": "piptemplatesadmin",
-    "k8s_vnet_name": "piptemplates-k8s-stg-vnet",
-    "k8s_vnet_address_cidr": "172.19.16.0/20",
-    "k8s_subnet_name": "piptemplates-k8s-stg-subnet",
-    "k8s_subnet_address_cidr": "172.19.16.0/20",
-    "k8s_service_cidr": "10.0.0.0/16",
-    "k8s_dns_service_ip": "10.0.0.10",
-    "k8s_docker_bridge_cidr": "172.17.0.1/16",
-    "ssh_keygen_enable": false,
-    "ssh_path": "./config/id_rsa.pub",
-    "ssh_private_key_path": "./config/id_rsa",
-
-    "container_registry_deployment_name": "piptemplates-container-registry-deployment",
-    "container_registry_name": "piptemplatesregistry",
-    "container_registry_sku": "Basic",
-    "container_registry_admin_enabled": true
+    "environment": {
+        "type": "cloud",
+        "name": "pip-cloud-demo",
+        "version": "1.0.0"
+    },
+    "azure": {
+        "region": "eastus",
+        "resource_group": "piptemplates-stage-east-us",
+        "subscription": "piptemplates-DI",
+        "sp_app_id": "secret",
+        "sp_password": "secret"
+    },
+    "k8s": {
+        "deployment_group_name": "piptemplates-stage-kubernetes-deployment",
+        "name": "piptemplates-stage-kubernetes",  
+        "version": "1.12.7",   
+        "master_count": 1,
+        "agent_count": 2,
+        "dns_name_prefix": "piptemplates-stage-",
+        "agent_vm_size": "Standard_D2_v2",
+        "admin_user": "piptemplatesadmin",
+        "vnet_name": "piptemplates-k8s-stg-vnet",
+        "vnet_address_cidr": "172.19.16.0/20",
+        "subnet_name": "piptemplates-k8s-stg-subnet",
+        "subnet_address_cidr": "172.19.16.0/20",
+        "service_cidr": "10.0.0.0/16",
+        "dns_service_ip": "10.0.0.10",
+        "docker_bridge_cidr": "172.17.0.1/16",
+        "ssh": {
+            "keygen_enable": false,
+            "path": "./config/id_rsa.pub",
+            "private_key_path": "./config/id_rsa"
+        }
+    },
+    "cr": {
+        "deployment_name": "piptemplates-container-registry-deployment",
+        "name": "piptemplatesregistry",
+        "sku": "Basic",
+        "admin_enabled": true
+    }
 }

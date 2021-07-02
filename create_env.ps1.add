@@ -1,11 +1,9 @@
-# Create k8s cluster
-switch ($config.env_type) {
-    "cloud" { 
-        . "$($rootPath)/src/install_k8s.ps1" $ConfigPath
-        . "$($rootPath)/src/install_registry.ps1" $ConfigPath
-        . "$($rootPath)/src/install_platform_services.ps1" $ConfigPath
-     }
-     Default {
-         Write-Host "Platform type not specified in config file. Please add 'env_type' to config."
-     }
-}
+###################################################################
+# Create the k8s cluster
+. "$($rootPath)/kubernetes/create.ps1" -ConfigPath "$ConfigPath" -ConfigPrefix "k8s" -ResourcePath "$ResourcePath" -ResourcePrefix "k8s"
+###################################################################
+
+###################################################################
+# Create the container registry (not required for k8s)
+. "$($rootPath)/container-registry/create.ps1" -ConfigPath "$ConfigPath" -ConfigPrefix "cr" -ResourcePath "$ResourcePath" -ResourcePrefix "cr"
+###################################################################
